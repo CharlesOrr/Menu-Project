@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{menu.restaurant_name}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>{{ menu.restaurant_name }}</h1>
+  <p> Published {{ menu.pub_date }}</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+  	{% for item in menu.item_set.all %}
+  	  <div class="col-sm-4">
+	    <h3>{{ item.item_name }}</h3>
+	    <p> ${{ item.price }}</p>
+	    <p> {{ item.item_text }}</p>
+  	  </div>
+  	{% endfor %}
+  </div>
+</div>
+
+</body>
+</html>
+<!-- <h1>{{ menu.restaurant_name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+	{% for item in menu.item_set.all %}
+	<li>{{ item.item_name }}</li>
+	{% endfor %}
+</ul> -->

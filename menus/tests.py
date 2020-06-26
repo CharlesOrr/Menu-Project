@@ -36,7 +36,7 @@ class MenuIndexViewTests(TestCase):
         response = self.client.get(reverse('menus:index'))
         self.assertQuerysetEqual(
             response.context['menu_list'], 
-            ['<Menu: Recent Menu Menu>'])
+            ['<Menu: Recent Menu>'])
 
     def test_future_menu(self):
         """
@@ -58,7 +58,7 @@ class MenuIndexViewTests(TestCase):
         response = self.client.get(reverse('menus:index'))
         self.assertQuerysetEqual(
             response.context['menu_list'],
-            ['<Menu: Recent Menu Menu>']
+            ['<Menu: Recent Menu>']
         )
 
     def test_more_than_10_menus(self):
@@ -115,12 +115,12 @@ class MenuModelTests(TestCase):
         recent_menu = Menu(pub_date=time)
         self.assertIs(recent_menu.published_within_one_week(), True)
 
-    def test_published_within_one_week_with_default_pub_date(self):
-        new_menu = Menu(restaurant_name='claro')
-        self.assertIs(new_menu.published_within_one_week(), True)
+    def test_menu_create(self):
+        empty: Menu = Menu()
+        empty.save()
+        assert empty.restaurant_name == ""
 
-    def test_menu_item_relationship(self):
-        """
-        When creating a menu and subsequent items, does it actually store the data in the database
-        """
-        claro: Menu = Menu(restaurant_name='claro')
+
+
+
+

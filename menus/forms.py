@@ -4,10 +4,10 @@ from django.db import models
 from .models import Menu, Item
 
 class RestaurantForm(ModelForm):
-	class Meta:
-		model = Menu
-		fields = ['restaurant_name']
-	# restaurant_name = models.CharField(max_length=100)
+    class Meta:
+        model = Menu
+        fields = ['restaurant_name']
+    # restaurant_name = models.CharField(max_length=100)
 
 
 class CreateForm(ModelForm):

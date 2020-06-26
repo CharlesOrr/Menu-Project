@@ -20,19 +20,19 @@
       </tr>
     </thead>
     <tbody>
-    	<a href="{% url 'menus:create' %}" class="btn btn-info" role="button">Create Menu</a>
-    	{% if menu_list %}
-		    {% for menu in menu_list %}
-	    		<tr>
-		    		<td><a href="{% url 'menus:retrieve' menu.id %}">{{ menu.restaurant_name }}</a></td>
-		    		<td>{{ menu.pub_date }}</td>
-		    		<td><a href="{% url 'menus:update' menu.id %}" class="btn btn-info" role="button">Update</a></td>
-		    		<td><a href="{% url 'menus:delete' menu.id %}" class="btn btn-info" role="button">Delete</a></td>
-		   		</tr>
-		    {% endfor %}	
-		{% else %}
-	    	<p>No Menus Today</p>
-		{% endif %}
+        <a href="{% url 'menus:create' %}" class="btn btn-info" role="button">Create Menu</a>
+        {% if menu_list %}
+            {% for menu in menu_list %}
+                <tr>
+                    <td><a href="{% url 'menus:retrieve' menu.id %}">{{ menu.restaurant_name }}</a></td>
+                    <td>{{ menu.pub_date }}</td>
+                    <td><a href="{% url 'menus:update' menu.id %}" class="btn btn-info" role="button">Update</a></td>
+                    <td><a href="{% url 'menus:delete' menu.id %}" class="btn btn-info" role="button">Delete</a></td>
+                </tr>
+            {% endfor %}    
+        {% else %}
+            <p>No Menus Today</p>
+        {% endif %}
     </tbody>
   </table>
 </div>

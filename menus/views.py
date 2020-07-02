@@ -77,6 +77,8 @@ class UpdateView(generic.UpdateView):
     def get_context_data(self, **kwargs):
         menu_id = self.kwargs.get('pk')
         context = super(UpdateView, self).get_context_data(**kwargs)
+
+        print(Item.objects.filter(menu=menu_id))
         context['formset'] = CreateFormSet(queryset=Item.objects.filter(menu=menu_id))
         context['restaurant_form'] = RestaurantForm(initial={'restaurant_name': Menu.objects.get(pk=menu_id)})
         return context

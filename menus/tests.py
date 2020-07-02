@@ -3,11 +3,16 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
-from .models import Menu
+
+from .forms import RestaurantForm, CreateFormSet, CreateForm
+from .models import Menu, Item
 
 def create_menu(restaurant_name, days):
     time = timezone.now() + datetime.timedelta(days=days)
     return Menu.objects.create(restaurant_name=restaurant_name, pub_date=time)
+
+def create_item(menu, name, text, meal, price):
+    return Item.objects.create(menu=menu, item_name=name, item_text=text, meal_type=meal, price=price)
 
 class MenuIndexViewTests(TestCase):
     def test_no_menus(self):
@@ -88,6 +93,46 @@ class MenuRetrieveViewTests(TestCase):
         url = reverse('menus:retrieve', args=(recent_menu.id,))
         response = self.client.get(url)
         self.assertContains(response, recent_menu.restaurant_name)
+
+class MenuCreateViewTests(TestCase):
+    # def setUp(self):
+    #     self.menu = Mntry.objects.create(author=user, title="My entry title")
+    def test_valid_data_restaurant_form(self):
+        form = RestaurantForm({
+            'restaurant_name': "Claro",
+        })
+        self.assertTrue(form.is_valid())
+        menu = form.save()
+        self.assertEqual(menu.restaurant_name, "Claro")
+
+    def test_blank_data_restaurant_form(self):
+        form = RestaurantForm({})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {
+            'restaurant_name': ['This field is required.'],
+        })
+
+    def test_valid_data_create_form(self):
+        menu = create_menu(restaurant_name='Claro', days=0)
+        item = create_item(menu, 'Food', 'It is food', 'entree', 10.00)
+        form = CreateFormSet({
+            'form-TOTAL_FORMS': '1',
+            'form-INITIAL_FORMS': '0',
+            'form-MAX_NUM_FORMS': '',
+            'item_name': ['Food'],
+            'item_text': ['It is Food'],
+            'meal_type': ['entree'],
+            'price': [10.00],
+        })
+        self.assertTrue(form.is_valid())
+
+        menu = form.save()
+        print(menu)
+        self.assertEqual(menu.item_name, 'Food')
+        self.assertEqual(menu.item_text, 'It is Food')
+        self.assertEqual(menu.meal_type, 'entree')
+        self.assertEqual(menu.price, 10.00)
+
 
 class MenuModelTests(TestCase):
 

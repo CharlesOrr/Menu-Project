@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Restaurants!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>New Haven Restaurants</h2>        
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Restaurant</th>
+        <th>Date Published</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<a href="{% url 'menus:create' %}" class="btn btn-info" role="button">Create Menu</a>
+    	{% if menu_list %}
+		    {% for menu in menu_list %}
+	    		<tr>
+		    		<td><a href="{% url 'menus:retrieve' menu.id %}">{{ menu.restaurant_name }}</a></td>
+		    		<td>{{ menu.pub_date }}</td>
+		    		<td><a href="{% url 'menus:update' menu.id %}" class="btn btn-info" role="button">Update</a></td>
+		    		<td><a href="{% url 'menus:delete' menu.id %}" class="btn btn-info" role="button">Delete</a></td>
+		   		</tr>
+		    {% endfor %}	
+		{% else %}
+	    	<p>No Menus Today</p>
+		{% endif %}
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
